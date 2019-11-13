@@ -3,6 +3,9 @@
 ## VideoNest is still shaping into itself.
 
 ### Currently working:
+## Test paths in postman
+## Routes that change or make new data require JWT token in 'x-auth-token' header.
+## Utilizes Yarn
 
 #### - get api/genres
 #### - get api/genres/:id
@@ -10,11 +13,15 @@
 #### - put api/genres/:id
 #### - delete api/genres/:id
 
-### Steps to run:
-#### 1. clone
-#### 2. npm install
-#### 3. run mongo && mongodb
-#### 4. run nodemon index.js or node index.js
-#### 5. open Postman and test requests.
+#### - get api/movies
+#### - post api/movies
+#### - put api/movies/:id
+#### - delete api/movies/:id
+
+#### - post api/return
+#### - get api/auth
+#### - get api/auth/me
+
+
 
 ##Thanks! : )
