@@ -9,21 +9,21 @@ describe('/api/genres', () => {
     beforeEach(() => { server = require('../../index'); })
     afterEach(async () => {
         //cleanup function wipes test database
-        await Genre.deleteMany({})
+        await Genre.deleteMany({ });
         server.close();
     });
-   
+
     describe('GET /', () => {
         it('should return all genres', async () => {
            await Genre.collection.insertMany([
                 { name: 'genre1' },
                 { name: 'genre2' },
                 { name: 'genre3' }
-            ])
+            ]);
 
             const res = await request(server).get('/api/genres');
             expect(res.status).toBe(200);
-            expect(res.body.length).toBe(3)
+            expect(res.body.length).toBe(3);
             expect(res.body.some(g => g.name === 'genre1')).toBeTruthy();
             expect(res.body.some(g => g.name === 'genre2')).toBeTruthy();
             expect(res.body.some(g => g.name === 'genre3')).toBeTruthy();
@@ -34,19 +34,19 @@ describe('/api/genres', () => {
         it('should return the genre with the given id', async () => {
             const genre = new Genre({ name: 'genre1' });
             await genre.save();
-            const res = await request(server).get(`/api/genres/${genre._id}`)
-            expect(res.status).toBe(200)
+            const res = await request(server).get(`/api/genres/${genre._id}`);
+            expect(res.status).toBe(200);
             expect(res.body).toHaveProperty('name', genre.name)
         });
 
         it('should return status 404 if no genre with the given id exists', async () => {
 
-            const res = await request(server).get('/api/genres/1')
+            const res = await request(server).get('/api/genres/1');
             expect(res.status).toBe(404)
         });
         it('should return status 404 if invalid id is passed', async () => {
             const objectId = mongoose.Types.ObjectId();
-            const res = await request(server).get('/api/genres/' + objectId)
+            const res = await request(server).get('/api/genres/' + objectId);
             expect(res.status).toBe(404)
         });
     })
@@ -68,18 +68,18 @@ describe('/api/genres', () => {
             //simulates an authenticated user
             token = new User().generateAuthToken();
             name = 'genreOne'
-        })
+        });
 
         it('return status 401 if user is not logged in', async () => {
             //simulates a an unauthenticated user
-            token = ''
-            const res = await exec()
+            token = '';
+            const res = await exec();
             expect(res.status).toBe(401);
         });
 
         it('return status 400 if genre is less than 5 characters', async () => {
-            name = '1234'
-            const res = await exec()
+            name = '1234';
+            const res = await exec();
             expect(res.status).toBe(400);
         });
 

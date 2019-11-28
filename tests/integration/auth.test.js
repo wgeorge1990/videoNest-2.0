@@ -6,22 +6,22 @@ describe('auth middleware', () => {
     beforeEach(() => { server = require('../../index'); });
     afterEach(async () => {
         //cleanup function
-        await Genre.deleteMany()
+        await Genre.deleteMany();
         server.close();
     });
 
-    let token
+    let token;
 
     const exec = () => {
         return request(server)
             .post('/api/genres')
             .set('x-auth-token', token)
             .send({ name: 'genreOne' })
-    }
+    };
 
     beforeEach(() => {
         token = new User().generateAuthToken();
-    })
+    });
 
     it('should return 401 if no token is provided', async () => {
         token = '';
@@ -31,7 +31,7 @@ describe('auth middleware', () => {
 
     it('should return 400 if invalid token is provided', async () => {
         token = 'a';
-        const res = await exec(); 
+        const res = await exec();
         expect(res.status).toBe(400);
     });
 
